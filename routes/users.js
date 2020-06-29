@@ -25,7 +25,7 @@ router.get('/', sessionChecker, function(req, res, next) {
   res.render('../views/login');
 });
 
-router.post('/', function(req, res) {
+router.post('/', sessionChecker, function(req, res) {
 	let username = req.body.data.username;
 	let password = req.body.data.password;
 

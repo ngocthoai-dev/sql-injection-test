@@ -7,9 +7,6 @@ const helmet = require('helmet');
 const cors = require('cors');
 const favicon = require('serve-favicon');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-
 var app = express();
 
 // view engine setup
@@ -20,24 +17,28 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-hashing = require('./routes/custom_hashing');
+
+let hashing = require('./routes/custom_hashing');
 const session = require('express-session');
 const MemoryStore = require('memorystore')(session)
 app.use(session({
-  key: 'sec',
+  key: 'sec-test',
   secret: hashing.hash(hashing.getSecId(), {rounds: 20}),
   store: new MemoryStore({
     checkPeriod: 1000 * 60 * 60 * 24, // prune expired entries every 24h
   }),
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 } // expire after 1 day
+  cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 }, // expire after 1 day
 }));
 app.use(cookieParser(hashing.hash(hashing.getSecId(), {rounds: 20})));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());
 app.use(cors());
 
+
+var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/users');
 app.use('/home', indexRouter);
 app.use('/', usersRouter);
 

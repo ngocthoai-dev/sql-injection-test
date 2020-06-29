@@ -7,19 +7,19 @@ const hashing = require('../routes/custom_hashing');
 
 // middleware for checking login
 const sessionChecker = (req, res, next)=>{
-  if(!req.session.user || !req.signedCookies.secid){
-    res.redirect('/');
+  if(!req.session.user && !req.signedCookies.secid){
+    res.redirect("/../");
   } else {
     next();
   }
 };
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', sessionChecker, function(req, res, next) {
   res.render('index', { display: false });
 });
 
-router.post('/', function(req, res){
+router.post('/', sessionChecker, function(req, res){
   console.log('req post from:', req.url, req.body);
   let query = "SELECT `name`, `category`, `cost` FROM `products` WHERE ";
   if(req.body.type == "approx"){
@@ -61,6 +61,16 @@ router.post('/', function(req, res){
   } else {
     res.send({ success: false });
   }
+});
+
+router.get('/logout', sessionChecker, function(req, res){
+  req.session.destroy(err=>{
+    if(err) throw err;
+
+    res.clearCookie('secid');
+    res.clearCookie('sec-test');
+    res.redirect('/');
+  });
 });
 
 module.exports = router;

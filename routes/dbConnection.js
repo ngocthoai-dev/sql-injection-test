@@ -9,6 +9,7 @@ let initDbConection = function(connectionCallback){
     password: "",
     database: "sec_test",
     connectTimeout: 30000,
+    multipleStatements: true, // this is problem in php
   });
   connection.connect((err)=>{
     if(err) throw err;
@@ -20,7 +21,7 @@ let initDbConection = function(connectionCallback){
 let db = function(query, queryCallback){
   // console.log(query, queryCallback);
   connection.query(query, (err, result)=>{
-    if(err) throw err;
+    if(err) console.log(err);
     queryCallback(result);
   });
 };
