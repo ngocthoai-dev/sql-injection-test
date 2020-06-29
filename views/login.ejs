@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partial/top.ejs %>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body onmousemove="cursorMove(event)">
+  <div class="fixed-top login-background w-100 h-100">
+    <img src="../images/login_background.gif" alt="login cursor" class='login-cursor'>
+  </div>
+  <div class='app-name pr-5' align='center'>
+    SQL-Injection App Testing
+  </div>
+
+	<div class="container">
+    <div class="login-container">
+      <form action="" class="login-form sign-in" method='post' onsubmit="login(event)" style="left: 0;">
+        <img class="avatar" src="/images/avatar.svg" alt="avatar" style="width: 10%;">
+        <h2>Welcome</h2>
+        <div class="input-div one">
+          <div class='label'>
+            <span><i class="fas fa-user"></i></span>
+            <h5>Username</h5>
+          </div>
+          <input type="text" class="input" name="username" placeholder="username">
+        </div>
+        <div class="input-div two">
+          <div class='label'>
+            <span><i class=" fas fa-lock"></i></span>
+            <h5>Password</h5>
+          </div>
+          <input type="password" class="input" name="password" placeholder="password">
+        </div>
+        <div class='sumbit-div'>
+          <button type="button" class="switch-type sign-up-btn" onclick="switchType('sign-up')">sign up?</button>
+          <input type="submit" class="submit-btn" value="Login">
+        </div>
+      </form>
+
+      <form action="" class="login-form sign-up" method='post' onsubmit="register(event)" style="right: -100%;">
+        <img class="avatar" src="/images/avatar.svg" alt="avatar" style="width: 10%;">
+        <h2>Welcome</h2>
+        <div class="input-div one">
+          <div class='label'>
+            <span><i class="fas fa-user"></i></span>
+            <h5>Username</h5>
+          </div>
+          <input type="text" class="input" name="username" placeholder="username">
+        </div>
+        <div class="input-div two">
+          <div class='label'>
+            <span><i class=" fas fa-lock"></i></span>
+            <h5>Password</h5>
+          </div>
+          <input type="password" class="input" name="password" placeholder="password">
+        </div>
+        <div class="input-div three" align="center">
+          <div class='label'>
+            <span><i class=" fas fa-lock"></i></span>
+            <h5>Re-Enter Password</h5>
+          </div>
+          <input type="password" class="input" name="repassword" placeholder="re-password">
+        </div>
+        <div class='sumbit-div'>
+          <button type="button" class="switch-type sign-in-btn" onclick="switchType('sign-in')">sign in?</button>
+          <input type="submit" class="submit-btn" value="Register">
+        </div>
+      </form>
+    </div>
+	</div>
+
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript" src="/javascripts/login.js"></script>
+  <script type="text/javascript">
+    let pic = document.getElementsByClassName('login-cursor')[0];
+    function cursorMove(evt){
+      pic.style.left = (evt.clientX - pic.clientHeight/2).toString() + "px";
+      pic.style.top = (evt.clientY - pic.clientHeight/2).toString() + "px";
+      // console.log(evt.clientX, evt.clientY, pic.style.left, pic.clientHeight);
+    }
+
+    let loginForm = document.getElementsByClassName('login-form');
+    let appName = document.getElementsByClassName('app-name')[0];
+    setInterval(()=>{
+      [...loginForm].forEach((form)=>{
+          if(window.getComputedStyle(form).color.toString() == "rgba(255, 255, 255, 0.9)")
+            form.style.color = "rgba(255, 255, 255, 0.3)";
+          else
+            form.style.color = "rgba(255, 255, 255, 0.9)";
+      });
+    }, 1000);
+
+    function switchType(option){
+      let signupForm = document.getElementsByClassName('sign-up')[0];
+      let signinForm = document.getElementsByClassName('sign-in')[0];
+
+      if(option.includes('in')){
+        signinForm.style.left = '0';
+        signupForm.style.right = '-100%';
+      } else if(option.includes('up')){
+        signinForm.style.left = '-100%';
+        signupForm.style.right = '0';
+      }
+    }
+  </script>
+</body>
+</html>

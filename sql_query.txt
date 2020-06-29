@@ -1,0 +1,16 @@
+CREATE TABLE accounts (
+    accountID int NOT NULL AUTO_INCREMENT,
+    username varchar(255) NOT NULL,
+    password varchar(255) NOT NULL,
+    role varchar(255) NOT NULL,
+    PRIMARY KEY (accountID)
+);
+CREATE TABLE products(
+    id int NOT NULL AUTO_INCREMENT,
+    name varchar(255) NOT NULL,
+    category varchar(255) NOT NULL,
+    cost varchar(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+INSERT INTO `products`(`name`, `category`, `cost`) VALUES ('book1', 'book', 10);
+INSERT INTO `products`(`name`, `category`, `cost`) VALUES ('book2', 'book', 15);

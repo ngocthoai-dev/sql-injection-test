@@ -1,0 +1,20 @@
+<table class="table text-light">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(let i=0; i<products.length; i++){ %>
+      <tr>
+        <th scope="row"><%= i+1 %></th>
+        <td><%= products[i]['name'] %></td>
+        <td><%= products[i]['category'] %></td>
+        <td><%= products[i]['cost'] %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

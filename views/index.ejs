@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include ./partial/top.ejs %>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body onmousemove="cursorMove(event)">
+    <div class="fixed-top login-background w-100 h-100">
+      <img src="../images/login_background.gif" alt="login cursor" class='login-cursor'>
+    </div>
+    <div class='app-name pr-5' align='center'>
+      SQL-Injection App Testing
+    </div>
+
+    <div class="container flex-column align-items-center justify-content-start">
+      <form method="post" class="searching d-flex justify-content-between mb-2" onsubmit="submitSearching(event)">
+        <div class="search-to-left"><button type="button" class="btn btn-outline-info" onclick="switchSearch(event, 'left')"><i class="fas fa-chevron-circle-left"></i></button></div>
+        <div class="search-bar" align='center'>
+          <div class="input-group search-input search-approx">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Search Products">
+          </div>
+          <div class="input-group search-input search-exact">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-filter"></i>
+              </div>
+            </div>
+            <input type="text" class="form-control" aria-label="Text input with radio button" placeholder="Search Exact Category">
+          </div>
+          <div class="input-group search-input search-range">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <i class="fas fa-cash-register"></i>
+              </div>
+            </div>
+            <input type="text" class="form-control" placeholder="From">
+            <input type="text" class="form-control" placeholder="To">
+          </div>
+        </div>
+        <div class="search-to-right"><button type="button" class="btn btn-outline-info" onclick="switchSearch(event, 'right')"><i class="fas fa-chevron-circle-right"></i></button></div>
+
+        <button type="submit" name="button" class="btn btn-outline-light mx-3"><i class="fab fa-searchengin"></i></button>
+      </form>
+
+      <div class="search-result"></div>
+    </div>
+
+    <script type="text/javascript">
+      var pic = document.getElementsByClassName('login-cursor')[0];
+      function cursorMove(evt){
+        pic.style.left = (evt.clientX - pic.clientHeight/2).toString() + "px";
+        pic.style.top = (evt.clientY - pic.clientHeight/2).toString() + "px";
+        // console.log(evt.clientX, evt.clientY, pic.style.left, pic.clientHeight);
+      }
+
+      var searchApprox = document.getElementsByClassName('search-approx')[0];
+      var searchExact = document.getElementsByClassName('search-exact')[0];
+      var searchRange = document.getElementsByClassName('search-range')[0];
+      var btnToLeft = document.getElementsByClassName('search-to-left')[0].firstChild;
+      var btnToRight = document.getElementsByClassName('search-to-right')[0].firstChild;
+      btnToLeft.disabled = true;
+      function switchSearch(evt, type) {
+      	evt.preventDefault();
+        if(type == 'left'){
+          if(getComputedStyle(searchApprox).left == "0px"){
+            btnToLeft.disabled = true;
+            return;
+          } else if(getComputedStyle(searchExact).left == "0px"){
+            btnToLeft.disabled = true;
+            searchApprox.style.left = "0%";
+            searchExact.style.left = "100%";
+            searchRange.style.left = "200%";
+          } else if(getComputedStyle(searchRange).left == "0px"){
+            btnToRight.disabled = false;
+            searchApprox.style.left = "-100%";
+            searchExact.style.left = "0%";
+            searchRange.style.left = "100%";
+          }
+        } else {
+          if(getComputedStyle(searchApprox).left == "0px"){
+            btnToLeft.disabled = false;
+            searchApprox.style.left = "-100%";
+            searchExact.style.left = "0%";
+            searchRange.style.left = "100%";
+          } else if(getComputedStyle(searchExact).left == "0px"){
+            btnToRight.disabled = true;
+            searchApprox.style.left = "-200%";
+            searchExact.style.left = "-100%";
+            searchRange.style.left = "0%";
+          } else if(getComputedStyle(searchRange).left == "0px"){
+            btnToRight.disabled = true;
+            return;
+          }
+        }
+      }
+    </script>
+  	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src="javascripts/search.js"></script>
+  </body>
+</html>
