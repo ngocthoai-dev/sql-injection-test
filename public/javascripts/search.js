@@ -18,11 +18,12 @@ function submitSearching(evt) {
 
   axios.post('/home', { data: data, type: type })
   .then((resp)=>{
+		// console.log(resp.data.err);
     if(resp.data.success){
       document.getElementsByClassName('search-result')[0].innerHTML = resp.data.table;
     }
   })
   .catch((err)=>{
-
+		console.log(err);
   });
 }

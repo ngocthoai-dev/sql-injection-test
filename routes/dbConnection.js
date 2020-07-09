@@ -21,8 +21,7 @@ let initDbConection = function(connectionCallback){
 let db = function(query, queryCallback){
   // console.log(query, queryCallback);
   connection.query(query, (err, result)=>{
-    if(err) console.log(err);
-    queryCallback(result);
+    queryCallback(err, result);
   });
 };
 
